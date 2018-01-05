@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Person;
+import com.linda.blog.entity.Result;
 import com.linda.blog.service.PersonService;
+import com.linda.blog.utils.JSONUtil;
+import com.linda.blog.utils.SysConstant;
 
 @Controller
 @RequestMapping("/person")
@@ -19,8 +22,11 @@ public class PersonController {
 	private PersonService personService;
 
 	@RequestMapping("/login")
-	public String logon() {
-		return "logon";
+	@ResponseBody
+	public Object logon() {
+		Person person = this.personService.getPersonById("1");
+		Result result = new Result(SysConstant.STATE_SUCCESS,"logon_success",person);
+		return JSONUtil.toJSON(result);
 	}
 
 	@RequestMapping(value = "/doLogin")

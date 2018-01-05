@@ -69,5 +69,20 @@ public class Person {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+   
+	public Person() {
+		super();
+	}
+
+	public Person(String id, String name, String idCard, String phone, String address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.idCard = idCard;
+		this.phone = phone;
+		this.address = address;
+	}
+	
 
 }

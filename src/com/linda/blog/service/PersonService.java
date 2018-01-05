@@ -10,26 +10,27 @@ import com.linda.blog.entity.Person;
 
 @Service
 public class PersonService {
-	
-	@Autowired 
+
+	@Autowired
 	private PersonDAO personDao;
+
 	public void addPerson(Person person) {
-        personDao.addPerson(person);
+		personDao.addPerson(person);
 	}
 
 	public void updatePerson(Person person) {
-       personDao.updatePerson(person);
+		personDao.updatePerson(person);
 	}
 
 	public void deletePersonById(String id) {
-      personDao.deletePersonById(id);
+		personDao.deletePersonById(id);
 	}
 
 	public List<Person> getPersons() {
 		return personDao.getPersons();
 	}
-	
+
 	public Person getPersonById(String id) {
-	   return personDao.getPersonById(id);	
+		return personDao.getPersonById(id);
 	}
 }

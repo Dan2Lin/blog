@@ -32,7 +32,7 @@
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.format_sql">true </prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="hibernate.cache.use_second_cache">false</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>   
                 <prop key="current_session_context_class">thread</prop>    
@@ -59,10 +59,13 @@
 		   <tx:method name="*" propagation= "REQUIRED" rollback-for= "Exception"/>
 		</tx:attributes>
 	</tx:advice>
-	<aop:config proxy-target-class= "true">
+	<!-- <aop:config proxy-target-class= "true">
 		<aop:advisor pointcut= "execution(public * com.linda.*.service.*Service.*(..))" advice-ref="txAdvice"/>
-	</aop:config>
-		
+	</aop:config> -->
+	<aop:config>  
+	    <aop:pointcut id="transactionPointcut" expression="execution(public * com.linda.*.service.*Service.*(..))" />      
+	    <aop:advisor pointcut-ref="transactionPointcut" advice-ref="txAdvice" />  
+    </aop:config>
 	<!-- 开启事务注解 -->
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"  /> -->
 </beans>

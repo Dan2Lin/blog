@@ -14,7 +14,7 @@ public class PersonService {
 	@Autowired
 	private PersonDAO personDao;
 
-	public void addPerson(Person person) {
+	public void addPerson(Person person){
 		personDao.addPerson(person);
 	}
 

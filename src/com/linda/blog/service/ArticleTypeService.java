@@ -12,8 +12,24 @@ import com.linda.blog.entity.ArticleType;
 public class ArticleTypeService {
    @Autowired
    private ArticleTypeDAO articleTypeDao;
-   
-   public List<ArticleType> getAllArticleType(){
+    
+   public List<ArticleType> getAllArticleType() throws Exception{
 	   return articleTypeDao.getAllArticleType();
    }
+   
+   public ArticleType getArticleTypeById(String id) throws Exception {
+		return articleTypeDao.getArticleTypeById(id);
+	}
+
+	public void addArticleType(ArticleType articleType) throws Exception {
+		articleTypeDao.addArticleType(articleType);
+	}
+
+	public void updateArticleType(ArticleType articleType)throws Exception {
+		articleTypeDao.updateArticleType(articleType);
+	}
+
+	public void deleteArticleTypeById(String id) throws Exception {
+		articleTypeDao.deleteArticleTypeById(id);
+	}
 }

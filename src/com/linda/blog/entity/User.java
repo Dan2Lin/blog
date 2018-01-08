@@ -9,22 +9,20 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
-	private int uid;
+	private String uid;
 	private String username;
 	private int role; // 1: super admin 2:amdin 3:common user
 	private String password;
 
 	@Id
-	@Column(name = "uid", nullable = false, length = 32, unique = true)
-	@GenericGenerator(name = "generator", strategy = "uuid.hex")
-	@GeneratedValue(generator = "generator")
-	public int getUid() {
+	@Column(name = "uid", nullable = false, unique = true)
+	public String getUid() {
 		return uid;
 	}
 
-	public void setUid(int uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 
@@ -55,7 +53,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(int uid, String username, int role, String password) {
+	public User(String uid, String username, int role, String password) {
 		super();
 		this.uid = uid;
 		this.username = username;

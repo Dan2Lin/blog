@@ -20,7 +20,23 @@ public class ArticleTypeDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	@SuppressWarnings("unchecked")
-	public List<ArticleType> getAllArticleType(){
-		return (List<ArticleType>)this.sessionFactory.getCurrentSession().createCriteria(ArticleType.class).list();
+	public List<ArticleType> getAllArticleType() throws Exception {
+		return (List<ArticleType>)this.getSession().createCriteria(ArticleType.class).list();
+	}
+	
+	public ArticleType getArticleTypeById(String id) throws Exception {
+		return (ArticleType) this.getSession().createQuery("from ArticleType where id = ?").setParameter(0, id).uniqueResult();
+	}
+
+	public void addArticleType(ArticleType articleType) throws Exception {
+		this.getSession().save(articleType);
+	}
+
+	public void updateArticleType(ArticleType articleType)throws Exception {
+		this.getSession().update(articleType);
+	}
+
+	public void deleteArticleTypeById(String id) throws Exception {
+		this.getSession().createQuery("delete ArticleType where id = ?").setParameter(0, id).executeUpdate();
 	}
 }

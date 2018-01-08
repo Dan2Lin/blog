@@ -13,27 +13,27 @@ public class ArticleService {
 	@Autowired
 	private ArticleDAO articleDao;
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles() throws Exception {
 		return articleDao.getArticles();
 	}
 
-	public Article getArticleById(int aid) {
+	public Article getArticleById(String aid) throws Exception {
 		return articleDao.getArticleById(aid);
 	}
 
-	public List<Article> getArticlesByType(int tId) {
+	public List<Article> getArticlesByType(String tId) throws Exception {
 		return articleDao.getArticlesByType(tId);
 	}
 
-	public void addArticle(Article article) {
+	public void addArticle(Article article) throws Exception {
 		articleDao.addArticle(article);
 	}
 
-	public void deleteArticleById(int aid) {
+	public void deleteArticleById(String aid) throws Exception {
 		articleDao.deleteArticleById(aid);
 	}
 
-	public void updateArticle(Article article) {
+	public void updateArticle(Article article) throws Exception {
 		articleDao.updateArticle(article);
 	}
 }

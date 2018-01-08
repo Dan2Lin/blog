@@ -1,14 +1,22 @@
 package com.linda.blog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Article;
+import com.linda.blog.entity.Result;
 import com.linda.blog.service.ArticleService;
+import com.linda.blog.utils.GenerateUniqueID;
+import com.linda.blog.utils.JSONUtil;
+import com.linda.blog.utils.SysConstant;
 
 @Controller
 @RequestMapping("/article")
@@ -18,37 +26,119 @@ public class ArticleController {
 
 	@RequestMapping("/getArticles")
 	@ResponseBody
-	public List<Article> getArticles() {
-		return articleService.getArticles();
+	public Object getArticles() throws Exception{
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		try {
+			
+			List<Article> articleList =  articleService.getArticles();
+			data.put("articles", articleList);
+			data.put("articleCount",articleList.size());
+			result = new Result(SysConstant.STATE_SUCCESS,"getArticles success",data);
+		} catch (Exception e) {
+			result = new Result(SysConstant.STATE_FAILURE,"getArticles failure",data);
+			e.printStackTrace();
+		}
+		return JSONUtil.toJSON(result);
 	}
 
 	@RequestMapping("/getArticleById")
 	@ResponseBody
-	public Article getArticleById(int aid) {
-		return articleService.getArticleById(aid);
+	public Object getArticleById(String aid) throws Exception {
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		if(StringUtils.isNotBlank(aid)) {
+			try {
+				Article article = articleService.getArticleById(aid);
+				if(null == article) {
+					data.put("article",null);
+					result = new Result(SysConstant.STATE_FAILURE,"article not exsit",data);
+				}else {
+					data.put("article",article);
+					result = new Result(SysConstant.STATE_SUCCESS,"getArticles success",data);
+				}
+			} catch (Exception e) {
+				data.put("article",null);
+				result = new Result(SysConstant.STATE_FAILURE,"getArticles failure",data);
+				e.printStackTrace();
+			}
+		}else {
+			data.put("article", null);
+			result = new Result(SysConstant.STATE_FAILURE,"articleId can't be null",data);
+		}
+		return JSONUtil.toJSON(result);
+		
 	}
 
 	@RequestMapping("/getArticlesByType")
 	@ResponseBody
-	public List<Article> getArticlesByType(int tId) {
-		return articleService.getArticlesByType(tId);
+	public Object getArticlesByType(String tId) throws Exception {
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		try {
+			 List<Article> articleList = articleService.getArticlesByType(tId);
+			 data.put("Articles", articleList);
+			 data.put("ArticlesCount", articleList.size());
+			 result = new Result(SysConstant.STATE_SUCCESS,"getArticlesByType Success",data);
+		} catch (Exception e) {
+			result = new Result(SysConstant.STATE_FAILURE,"getArticlesByType failure",data);
+			e.printStackTrace();
+		}
+		return JSONUtil.toJSON(result);
 	}
 
 	@RequestMapping("/addArticle")
 	@ResponseBody
-	public void addArticle(Article article) {
-		articleService.addArticle(article);
+	public Object addArticle(@RequestBody Article article) throws Exception {
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		data.put("article", null);
+		article.setaId(GenerateUniqueID.generateArticleId());
+		try {
+			articleService.addArticle(article);
+			result = new Result(SysConstant.STATE_SUCCESS, "add article success", data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = new Result(SysConstant.STATE_FAILURE, "add article failure", data);
+			e.printStackTrace();
+		}
+		return JSONUtil.toJSON(result);
 	}
 
 	@RequestMapping("/deleteArticleById")
 	@ResponseBody
-	public void deleteArticleById(int aid) {
-		articleService.deleteArticleById(aid);
+	public Object deleteArticleById(String aid) throws Exception {	
+		Result result = null;
+		if(StringUtils.isNotBlank(aid)) {
+			result = new Result(SysConstant.STATE_FAILURE, "article id is null", null);
+		}else {
+			try {
+				articleService.deleteArticleById(aid);
+				result = new Result(SysConstant.STATE_SUCCESS, "delete article success", null);
+			}catch(Exception e) {
+				result = new Result(SysConstant.STATE_FAILURE, "delete article failure", null);
+				e.printStackTrace();
+			}	
+		}
+		return JSONUtil.toJSON(result);
 	}
 
 	@RequestMapping("/updateArticle")
 	@ResponseBody
-	public void updateArticle(Article article) {
-		articleService.updateArticle(article);
+	public Object updateArticle(@RequestBody Article article) throws Exception {
+		Result result = null;
+		if(article == null) {
+			result = new Result(SysConstant.STATE_FAILURE, "article can't be null when you update the article", null);
+		}else {
+			try {
+				articleService.updateArticle(article);
+				result = new Result(SysConstant.STATE_SUCCESS, "update article success", null);
+			}catch (Exception e) {
+				result = new Result(SysConstant.STATE_FAILURE, "update article failure", null);
+				e.printStackTrace();
+				
+			}
+		}
+		return JSONUtil.toJSON(result);	
 	}
 }

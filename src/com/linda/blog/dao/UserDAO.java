@@ -20,7 +20,7 @@ public class UserDAO {
 		return sessionFactory.getCurrentSession();
 	}
 
-	public User getUserById(int id) {
+	public User getUserById(String id) {
 		return (User) this.getSession().createQuery("from User where id = ?").setParameter(0, id).uniqueResult();
 	}
 
@@ -28,16 +28,16 @@ public class UserDAO {
 		this.getSession().save(user);
 	}
 
-	public void updateUser(User user) {
+	public void updateUser(User user)throws Exception {
 		this.getSession().update(user);
 	}
 
-	public void deleteUserById(int id) {
+	public void deleteUserById(String id) throws Exception {
 		this.getSession().createQuery("delete User where id = ?").setParameter(0, id).executeUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<User> getUsers() {
+	public List<User> getUsers() throws Exception {
 		return (List<User>) this.getSession().createCriteria(User.class).list();
 	}
 }

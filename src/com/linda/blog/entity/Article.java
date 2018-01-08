@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "article")
 public class Article {
-	private int aId; // articleId
+	private String aId; // articleId
 	private String title;
 	private int tId; // article type
 	private Date publishTime;
@@ -24,11 +24,11 @@ public class Article {
 	@Column(name = "aId", nullable = false, length = 32, unique = true)
 	@GenericGenerator(name = "generator", strategy = "uuid.hex")
 	@GeneratedValue(generator = "generator")
-	public int getaId() {
+	public String getaId() {
 		return aId;
 	}
 
-	public void setaId(int aId) {
+	public void setaId(String aId) {
 		this.aId = aId;
 	}
 
@@ -77,7 +77,7 @@ public class Article {
 		this.pageview = pageview;
 	}
 
-	public Article(int aId, String title, int tId, Date publishTime, String content, int pageview) {
+	public Article(String aId, String title, int tId, Date publishTime, String content, int pageview) {
 		super();
 		this.aId = aId;
 		this.title = title;

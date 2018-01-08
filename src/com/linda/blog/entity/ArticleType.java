@@ -11,18 +11,18 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "articleType")
 public class ArticleType {
-	private int tId;
+	private String tId;
 	private String typeContent;
 
 	@Id
 	@Column(name = "tId", nullable = false, length = 32, unique = true)
 	@GenericGenerator(name = "generator", strategy = "uuid.hex")
 	@GeneratedValue(generator = "generator")
-	public int getTypeId() {
+	public String getTypeId() {
 		return tId;
 	}
 
-	public void setTypeId(int tId) {
+	public void setTypeId(String tId) {
 		this.tId = tId;
 	}
 
@@ -35,7 +35,7 @@ public class ArticleType {
 		this.typeContent = typeContent;
 	}
 
-	public ArticleType(int tId, String typeContent) {
+	public ArticleType(String tId, String typeContent) {
 		super();
 		this.tId = tId;
 		this.typeContent = typeContent;

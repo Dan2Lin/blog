@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Result;
 import com.linda.blog.entity.User;
+import com.linda.blog.entity.UserRole;
+import com.linda.blog.service.UserRoleService;
 import com.linda.blog.service.UserService;
 import com.linda.blog.utils.GenerateUniqueID;
 import com.linda.blog.utils.JSONUtil;
@@ -25,6 +27,8 @@ import com.linda.blog.utils.SysConstant;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRoleService userRoleService;
  
 	@RequestMapping("/addUser")
 	@ResponseBody
@@ -121,5 +125,22 @@ public class UserController {
 		return JSONUtil.toJSON(result);
 
 	}
+	@RequestMapping("/getAllUserRole")
+	@ResponseBody
+	public Object getAllUserRole() throws Exception {
+		Result result = null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			List<UserRole> userRoleList = userRoleService.getAllUserRole();
+			data.put("userRoles", userRoleList);
+			result = new Result(SysConstant.STATE_SUCCESS,"getUserRoleService success",data);
+		} catch (Exception e) {
+			data.put("userRoles", null);
+			result = new Result(SysConstant.STATE_FAILURE,"getUserRoleService failure",data);
+			e.printStackTrace();
+		}
+		return JSONUtil.toJSON(result);
+	}
+	
 
 }

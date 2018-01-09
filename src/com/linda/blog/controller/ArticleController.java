@@ -98,7 +98,6 @@ public class ArticleController {
 			articleService.addArticle(article);
 			result = new Result(SysConstant.STATE_SUCCESS, "add article success", data);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			result = new Result(SysConstant.STATE_FAILURE, "add article failure", data);
 			e.printStackTrace();
 		}

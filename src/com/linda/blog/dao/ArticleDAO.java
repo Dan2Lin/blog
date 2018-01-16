@@ -4,25 +4,35 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
 import com.linda.blog.entity.Article;
+import com.linda.blog.entity.ArticleList;
 
 @Repository
 public class ArticleDAO {
 	@Resource
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unused")
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
     
 	@SuppressWarnings("unchecked")
-	public List<Article> getArticles() throws Exception {
-		return (List<Article>)this.getSession().createCriteria(Article.class).list();
+	public List<ArticleList> getArticles() throws Exception {
+		String sql = "select a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId";  
+		List<ArticleList> alist = (List<ArticleList>) this.getSession().createSQLQuery(sql)  
+		    .addScalar("title", StandardBasicTypes.STRING)  
+		    .addScalar("publishTime", StandardBasicTypes.DATE)  
+		    .addScalar("content", StandardBasicTypes.STRING)  
+		    .addScalar("articleTypeName", StandardBasicTypes.STRING)  
+		    .setResultTransformer(Transformers.aliasToBean(ArticleList.class)).list();  
+		return alist;
 	}
 	
 	public Article getArticleById(String aid) throws Exception {

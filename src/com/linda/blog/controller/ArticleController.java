@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Article;
+import com.linda.blog.entity.ArticleList;
 import com.linda.blog.entity.Result;
 import com.linda.blog.service.ArticleService;
 import com.linda.blog.utils.GenerateUniqueID;
@@ -30,8 +31,7 @@ public class ArticleController {
 		Result result = null;
 		Map<String,Object> data = new HashMap<String,Object>();
 		try {
-			
-			List<Article> articleList =  articleService.getArticles();
+			List<ArticleList> articleList =  articleService.getArticles();
 			data.put("articles", articleList);
 			data.put("articleCount",articleList.size());
 			result = new Result(SysConstant.STATE_SUCCESS,"getArticles success",data);

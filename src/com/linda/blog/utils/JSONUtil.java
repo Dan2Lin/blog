@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.processors.JsDateJsonBeanProcessor;
 import net.sf.json.util.CycleDetectionStrategy;
 import net.sf.json.util.PropertyFilter;
 
@@ -115,7 +116,9 @@ public class JSONUtil {
 		JsonConfig jsonConfig = new JsonConfig();
 		String[] newStr = new String[]{"hibernateLazyInitializer","handler"};
 		jsonConfig.setExcludes(newStr);
-
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);  
+		
+		jsonConfig.registerJsonBeanProcessor(java.sql.Date.class,new JsDateJsonBeanProcessor()); 
 		jsonConfig.setJsonPropertyFilter(new PropertyFilter() {
 
 			@Override

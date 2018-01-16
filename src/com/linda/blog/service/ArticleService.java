@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.linda.blog.dao.ArticleDAO;
 import com.linda.blog.entity.Article;
+import com.linda.blog.entity.ArticleList;
 
 @Service
 public class ArticleService {
 	@Autowired
 	private ArticleDAO articleDao;
 
-	public List<Article> getArticles() throws Exception {
+	public List<ArticleList> getArticles() throws Exception {
 		return articleDao.getArticles();
 	}
 

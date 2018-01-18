@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Result;
 import com.linda.blog.entity.User;
+import com.linda.blog.entity.UserList;
 import com.linda.blog.entity.UserRole;
 import com.linda.blog.service.UserRoleService;
 import com.linda.blog.service.UserService;
@@ -113,8 +114,8 @@ public class UserController {
 		Result result = null;
 		Map<String, Object> data = new HashMap<String, Object>();
 		try {
-			 List<User> userList = userService.getAllUsers();
-			 data.put("users", userList);
+			 List<UserList> userList = userService.getAllUsers();	 
+			 data.put("users", userService.formatUserList(userList));
 			 data.put("userCount", userList.size());
 			 result = new Result(SysConstant.STATE_SUCCESS,"getAllUsers Success",data);
 		} catch (Exception e) {

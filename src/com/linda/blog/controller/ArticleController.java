@@ -41,6 +41,23 @@ public class ArticleController {
 		}
 		return JSONUtil.toJSON(result);
 	}
+	
+	@RequestMapping("/searchArticles")
+	@ResponseBody
+	public Object searchArticles(String searchInput) throws Exception{
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		try {
+			List<ArticleList> articleList =  articleService.searchArticles(searchInput);
+			data.put("articles", articleList);
+			data.put("articleCount",articleList.size());
+			result = new Result(SysConstant.STATE_SUCCESS,"searchArticles success",data);
+		} catch (Exception e) {
+			result = new Result(SysConstant.STATE_FAILURE,"searchArticles failure",data);
+			e.printStackTrace();
+		}
+		return JSONUtil.toJSON(result);
+	}
 
 	@RequestMapping("/getArticleById")
 	@ResponseBody

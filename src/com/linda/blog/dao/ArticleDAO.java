@@ -34,6 +34,17 @@ public class ArticleDAO {
 		    .setResultTransformer(Transformers.aliasToBean(ArticleList.class)).list();  
 		return alist;
 	}
+	@SuppressWarnings("unchecked")
+	public List<ArticleList> searchArticles(String param) throws Exception {
+		String sql = "SELECT * FROM (select a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId) AS alldata where title like '%"+param+"%' or articleTypeName LIKE '%"+param+"%'";  
+		List<ArticleList> alist = (List<ArticleList>) this.getSession().createSQLQuery(sql)  
+		    .addScalar("title", StandardBasicTypes.STRING)  
+		    .addScalar("publishTime", StandardBasicTypes.DATE)  
+		    .addScalar("content", StandardBasicTypes.STRING)  
+		    .addScalar("articleTypeName", StandardBasicTypes.STRING)  
+		    .setResultTransformer(Transformers.aliasToBean(ArticleList.class)).list();  
+		return alist;
+	}
 	
 	public Article getArticleById(String aid) throws Exception {
 		return (Article)this.getSession().createQuery("from Article where id = ?").setParameter(0, aid).uniqueResult();

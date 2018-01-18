@@ -6,16 +6,19 @@ import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
+import com.linda.blog.entity.ArticleList;
 import com.linda.blog.entity.User;
+import com.linda.blog.entity.UserList;
 
 @Repository
 public class UserDAO {
 	@Resource
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unused")
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
@@ -37,7 +40,17 @@ public class UserDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<User> getUsers() throws Exception {
-		return (List<User>) this.getSession().createCriteria(User.class).list();
+	public List<UserList> getUsers() throws Exception {
+		/*return (List<User>) this.getSession().createCriteria(User.class).list();*/
+		String sql = "select * from users a,user_role b where a.role = b.rId";
+		return this.getSession().createSQLQuery(sql)
+				.addScalar("uid", StandardBasicTypes.STRING)  
+			    .addScalar("username", StandardBasicTypes.STRING)  
+			    .addScalar("password", StandardBasicTypes.STRING)  
+			    .addScalar("role", StandardBasicTypes.INTEGER)  
+			    .addScalar("rId", StandardBasicTypes.INTEGER)  
+			    .addScalar("rType", StandardBasicTypes.STRING)  
+			    .addScalar("rName", StandardBasicTypes.STRING)
+			    .setResultTransformer(Transformers.aliasToBean(UserList.class)).list(); 
 	}
 }

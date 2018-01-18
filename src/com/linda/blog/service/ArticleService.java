@@ -17,6 +17,9 @@ public class ArticleService {
 	public List<ArticleList> getArticles() throws Exception {
 		return articleDao.getArticles();
 	}
+	public List<ArticleList> searchArticles(String searchInput) throws Exception {
+		return articleDao.searchArticles(searchInput);
+	}
 
 	public Article getArticleById(String aid) throws Exception {
 		return articleDao.getArticleById(aid);

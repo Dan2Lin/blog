@@ -55,7 +55,7 @@ public class UserController {
 	public Object deleteUserById(String id) throws Exception {
 		Log.info("UserController:/user/deleteUserById delete id = " + id);
 		Result result = null;
-		if(StringUtils.isNotBlank(id)) {
+		if(!StringUtils.isNotBlank(id)) {
 			result = new Result(SysConstant.STATE_FAILURE, "user id is null", null);
 		}else {
 			try {
@@ -103,6 +103,25 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+		return JSONUtil.toJSON(result);
+
+	}
+	@RequestMapping("/searchUserByParam")
+	@ResponseBody
+	public Object searchUserByParam(String param) throws Exception {
+		Result result = null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			List<UserList> userList = userService.searchUserByParam(param);
+			data.put("users", userService.formatUserList(userList));
+			data.put("userCount", userList.size());
+			result = new Result(SysConstant.STATE_SUCCESS,"searchAllUsers Success",data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			data.put("users", null);
+			result = new Result(SysConstant.STATE_FAILURE,"searchAllUsers failure",data);
 		}
 		
 		return JSONUtil.toJSON(result);

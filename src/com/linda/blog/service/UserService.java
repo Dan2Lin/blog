@@ -55,7 +55,10 @@ public class UserService {
 	public User getUserById(String id) throws Exception {
 		return userDao.getUserById(id);
 	}
-
+    
+	public List<UserList> searchUserByParam(String param) throws Exception {
+		return userDao.searchUserByParam(param);
+	}
 	public List<UserList> getAllUsers() throws Exception {
 		return userDao.getUsers();
 	}

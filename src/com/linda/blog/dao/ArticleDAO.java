@@ -25,8 +25,9 @@ public class ArticleDAO {
     
 	@SuppressWarnings("unchecked")
 	public List<ArticleList> getArticles() throws Exception {
-		String sql = "select a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId";  
+		String sql = "select a.aId,a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId order by a.publishTime DESC";  
 		List<ArticleList> alist = (List<ArticleList>) this.getSession().createSQLQuery(sql)  
+			.addScalar("aId", StandardBasicTypes.STRING)  
 		    .addScalar("title", StandardBasicTypes.STRING)  
 		    .addScalar("publishTime", StandardBasicTypes.DATE)  
 		    .addScalar("content", StandardBasicTypes.STRING)  
@@ -36,8 +37,9 @@ public class ArticleDAO {
 	}
 	@SuppressWarnings("unchecked")
 	public List<ArticleList> searchArticles(String param) throws Exception {
-		String sql = "SELECT * FROM (select a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId) AS alldata where title like '%"+param+"%' or articleTypeName LIKE '%"+param+"%'";  
+		String sql = "SELECT * FROM (select a.aId,a.title,a.publishTime,a.content,b.typeContent as articleTypeName from article a ,articletype b where a.tId = b.tId) AS alldata where title like '%"+param+"%' or articleTypeName LIKE '%"+param+"%' order by alldata.publishTime DESC";  
 		List<ArticleList> alist = (List<ArticleList>) this.getSession().createSQLQuery(sql)  
+			.addScalar("aId", StandardBasicTypes.STRING)  
 		    .addScalar("title", StandardBasicTypes.STRING)  
 		    .addScalar("publishTime", StandardBasicTypes.DATE)  
 		    .addScalar("content", StandardBasicTypes.STRING)  

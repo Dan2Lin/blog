@@ -125,7 +125,7 @@ public class ArticleController {
 	@ResponseBody
 	public Object deleteArticleById(String aid) throws Exception {	
 		Result result = null;
-		if(StringUtils.isNotBlank(aid)) {
+		if(!StringUtils.isNotBlank(aid)) {
 			result = new Result(SysConstant.STATE_FAILURE, "article id is null", null);
 		}else {
 			try {

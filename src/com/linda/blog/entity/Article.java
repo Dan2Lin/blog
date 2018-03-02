@@ -42,11 +42,11 @@ public class Article {
 	}
 
 	@Column(name = "tId", nullable = false)
-	public String getType() {
+	public String gettId() {
 		return tId;
 	}
 
-	public void setType(String tId) {
+	public void settId(String tId) {
 		this.tId = tId;
 	}
 

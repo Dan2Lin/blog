@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "articleType")
+@Table(name = "articletype")
 public class ArticleType {
 	private String tId;
 	private String typeContent;

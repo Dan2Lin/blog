@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import com.linda.blog.entity.Article;
 import com.linda.blog.entity.ArticleList;
 import com.linda.blog.entity.Result;
 import com.linda.blog.service.ArticleService;
+import com.linda.blog.utils.FileUploader;
 import com.linda.blog.utils.GenerateUniqueID;
 import com.linda.blog.utils.JSONUtil;
 import com.linda.blog.utils.SysConstant;
@@ -155,6 +159,14 @@ public class ArticleController {
 				
 			}
 		}
+		return JSONUtil.toJSON(result);	
+	}
+	@RequestMapping("/uploadImage")
+	@ResponseBody
+	public Object uploadImage(String str,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Result result = null;
+		FileUploader fileUploader=new FileUploader();
+		fileUploader.doPost(request,response);
 		return JSONUtil.toJSON(result);	
 	}
 }

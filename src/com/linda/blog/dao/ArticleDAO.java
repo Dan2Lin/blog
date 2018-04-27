@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.linda.blog.entity.Article;
 import com.linda.blog.entity.ArticleList;
+import com.linda.blog.entity.Comment;
 
 @Repository
 public class ArticleDAO {
@@ -67,5 +68,9 @@ public class ArticleDAO {
 	@SuppressWarnings("unchecked")
 	public List<Article> getArticlesByType(String tId) throws Exception {
 		return (List<Article>)this.getSession().createQuery("from Article where tid = ?").setParameter(0, tId).list();
+	}
+	
+	public void addComment(Comment comment) throws Exception {
+		this.getSession().save(comment);
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.linda.blog.dao.ArticleDAO;
 import com.linda.blog.entity.Article;
 import com.linda.blog.entity.ArticleList;
+import com.linda.blog.entity.Comment;
 
 @Service
 public class ArticleService {
@@ -30,6 +31,7 @@ public class ArticleService {
 	}
 
 	public void addArticle(Article article) throws Exception {
+		System.out.println(article.getTitle());
 		articleDao.addArticle(article);
 	}
 
@@ -39,5 +41,8 @@ public class ArticleService {
 
 	public void updateArticle(Article article) throws Exception {
 		articleDao.updateArticle(article);
+	}
+	public void addComment(Comment comment) throws Exception{
+		articleDao.addComment(comment);
 	}
 }

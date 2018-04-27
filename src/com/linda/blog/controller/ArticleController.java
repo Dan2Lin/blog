@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linda.blog.entity.Article;
 import com.linda.blog.entity.ArticleList;
+import com.linda.blog.entity.Comment;
 import com.linda.blog.entity.Result;
 import com.linda.blog.service.ArticleService;
 import com.linda.blog.utils.FileUploader;
@@ -168,5 +169,24 @@ public class ArticleController {
 		FileUploader fileUploader=new FileUploader();
 		fileUploader.doPost(request,response);
 		return JSONUtil.toJSON(result);	
+	}
+	
+	@RequestMapping("/addComment")
+	@ResponseBody
+	public Object addComment(@RequestBody Comment comment) {
+		Result result = null;
+		if(comment == null) {
+			result = new Result(SysConstant.STATE_FAILURE, "comment can't be null", null);
+		}else {
+			try {
+				articleService.addComment(comment);
+				result = new Result(SysConstant.STATE_SUCCESS, "add comment success", null);
+			}catch (Exception e) {
+				result = new Result(SysConstant.STATE_FAILURE, "add comment failure", null);
+				e.printStackTrace();
+				
+			}
+		}
+		return JSONUtil.toJSON(result);
 	}
 }

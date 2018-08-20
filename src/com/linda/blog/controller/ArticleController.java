@@ -189,4 +189,25 @@ public class ArticleController {
 		}
 		return JSONUtil.toJSON(result);
 	}
+	
+	@RequestMapping("/getCommentList")
+	@ResponseBody
+	public Object getCommentList(String aid) {
+		Result result = null;
+		Map<String,Object> data = new HashMap<String,Object>();
+		if(aid == null) {
+			result = new Result(SysConstant.STATE_FAILURE, "article id can't be null", null);
+		}else {
+			try {
+			    List<Comment> commentList = articleService.getCommentList(aid);
+			    data.put("commentList", commentList);
+				result = new Result(SysConstant.STATE_SUCCESS, "get comment list success", data);
+			}catch (Exception e) {
+				result = new Result(SysConstant.STATE_FAILURE, "get comment list failure", data);
+				e.printStackTrace();
+				
+			}
+		}
+		return JSONUtil.toJSON(result);
+	}
 }

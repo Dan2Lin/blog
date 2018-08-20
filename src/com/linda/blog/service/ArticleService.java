@@ -31,7 +31,6 @@ public class ArticleService {
 	}
 
 	public void addArticle(Article article) throws Exception {
-		System.out.println(article.getTitle());
 		articleDao.addArticle(article);
 	}
 
@@ -42,7 +41,11 @@ public class ArticleService {
 	public void updateArticle(Article article) throws Exception {
 		articleDao.updateArticle(article);
 	}
-	public void addComment(Comment comment) throws Exception{
+	public void addComment(Comment comment) throws Exception {
 		articleDao.addComment(comment);
+	}
+	
+	public List<Comment> getCommentList(String aid) throws Exception {
+		return articleDao.getCommentList(aid);
 	}
 }

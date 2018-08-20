@@ -16,6 +16,7 @@ public class Comment {
 	private String name;
 	private String content;
 	private String parent_id;
+//	private Date post_date;
 	
 	@Id
 	@Column(name = "cid", nullable = false, length = 32, unique = true)
@@ -60,7 +61,15 @@ public class Comment {
 	public void setParent_id(String parent_id) {
 		this.parent_id = parent_id;
 	}
-
+	
+//	public Date getPost_date() {
+//		return post_date;
+//	}
+//
+//	public void setPost_date(Date post_date) {
+//		this.post_date = post_date;
+//	}
+	
 	public Comment(String cid, String aid, String name, String content, String parent_id) {
 		super();
 		this.cid = cid;
@@ -69,7 +78,6 @@ public class Comment {
 		this.content = content;
 		this.parent_id = parent_id;
 	}
-
 	public Comment() {
 		super();
 	}

@@ -73,4 +73,9 @@ public class ArticleDAO {
 	public void addComment(Comment comment) throws Exception {
 		this.getSession().save(comment);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Comment> getCommentList(String aid) throws Exception {
+		return (List<Comment>)this.getSession().createQuery("from Comment where aid = ?").setParameter(0,aid).list();
+	}
 }
